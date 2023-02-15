@@ -3,9 +3,6 @@ package hotel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.sql.rowset.spi.TransactionalWriter;
-
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
@@ -17,6 +14,7 @@ public class Reserva {
 	String checkIn;
 	String checkOut;
 	int dias;
+	public Object System;
 	public String getNomeCliente() {
 		return nomeCliente;
 	}
@@ -44,14 +42,14 @@ public class Reserva {
 	public String getCheckIn() {
 		return checkIn;
 	}
-	public void setCheckIn(String checkOut) {
-		this.checkIn = checkOut;
+	public CharSequence setCheckIn(String checkOut) {
+		return this.checkIn = checkOut;
 	}
 	public String getCheckOut() {
 		return checkOut;
 	}
-	public void setCheckOut(String checkOut) {
-		this.checkOut = checkOut;
+	public CharSequence setCheckOut(String checkOut) {
+		return this.checkOut = checkOut;
 	}
 	
 	
@@ -65,8 +63,12 @@ public class Reserva {
 		Date date = formatter.parse(checkOut);
 	}
 	
-//	public int  calculoDias() {
-//		dias = ChronoUnit.DAYS.between(transfDataIn(), transfDataOut());
-//		return dias;
-//	}
+	public int calculoDias() {
+		LocalDate dataInicial = LocalDate.parse(setCheckIn(checkIn));
+		LocalDate dataFinal = LocalDate.parse(setCheckOut(checkOut));
+		int days = (int) ChronoUnit.DAYS.between(dataInicial, dataFinal);
+		return days;
+	}
+	
+
 }

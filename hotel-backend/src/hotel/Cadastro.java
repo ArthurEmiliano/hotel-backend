@@ -14,6 +14,7 @@ public class Cadastro {
 	Date dataDeNascimento;
 	String email;
 	
+
 	public String getNome()
 	{
 		return nome;

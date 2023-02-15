@@ -1,15 +1,19 @@
 package hotel;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 
 public class Hotel {
 
-	public static void main(String args[]) 
+	public static void main(String args[]) throws ParseException 
 	{
 		
 		Scanner input = new Scanner(System.in);
@@ -69,11 +73,11 @@ public class Hotel {
 			break;
 		}
 	
-		SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+		
 		
 		Reserva reserva = new Reserva();	
 		System.out.println("\n");
-	
+
 		Cliente hospedes = new Cliente();
 		
 		do  
@@ -92,30 +96,46 @@ public class Hotel {
 			{
 				
 			case 1: 
-				System.out.println("Suite Escolhida: " + opcao + "Digite o numero do Quarto" );
+				System.out.println("Suite Escolhida: " + opcao + " Digite o numero do Quarto" );
 				i= input.nextInt();
 				if (i<20)
 				{
 					
 				if (quartos[i]== 0) 
 					{
-					
+					SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
 						System.out.println("Digite o Nome do Hospede:");
 						hospedes.setNome(input.next());
 						System.out.println("Digite o Sobrenome");
 						hospedes.setSobrenome(input.next());
 						System.out.println("Digite o CPF");
 						hospedes.setCpf(input.nextLong());
-						System.out.println("Digite a data de Entrada dd/MM/yyy");
+						System.out.println("Digite a Entrada no Hotel ( dd/MM/yyy)");
 						reserva.setCheckIn(input.next());
 						System.out.println("Digite a data de Saída dd/MM/yyy");
 						reserva.setCheckOut(input.next());
 						System.out.printf("Hospede registrado com sucesso no quarto %d\n", i); 
-						
-					
-						
-						System.out.println("O valor da Reserva  Ficou em R$: "  );
 
+						Quarto quarto = new Quarto();
+						String d1 = reserva.checkIn;
+						String d2 = reserva.checkOut;
+						try {
+				            Date date1 = data.parse(d1);
+				            Date date2 = data.parse(d2);
+				 
+				            long elapsedms = date2.getTime() - date1.getTime();
+				            long diff = TimeUnit.MINUTES.convert(elapsedms, TimeUnit.MILLISECONDS);
+				            double hours = (double)(diff)/60;
+				            int days = (int) ((double)(hours)/24);
+				            System.out.println(days);
+				            double totalReserva = (days*quarto.getValorDiaria());
+				            System.out.println("O valor da Reserva  Ficou em R$: " + totalReserva) ;
+				            
+				        }
+				        catch (ParseException e) {
+				            e.printStackTrace();
+				        }
+	
 						System.out.println("Qual a forma de Pagamento: ");
 						System.out.println(" 1 - Débito ");
 						System.out.println(" 2 - Crédito ");
@@ -131,6 +151,7 @@ public class Hotel {
 							System.out.print("Digite o numero do seu cartão");
 							Pagamento pagamento = new Pagamento();
 							pagamento.setNumeroCartao(input.nextLong());
+							input.nextLine();
 							System.out.println("Digite o nome Impresso no Cartão");
 							pagamento.setNomeImpresso(input.nextLine());
 							System.out.println("Digite o numero de Segurança");

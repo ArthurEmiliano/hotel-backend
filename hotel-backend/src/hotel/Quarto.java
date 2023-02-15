@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 public class Quarto {
+	public static int setvalorDiaria;
 	String nomeQuarto;
 	String descricaoQuarto;
 	double valorDiaria;
@@ -74,10 +75,6 @@ public class Quarto {
 				+ valorDiaria + "\nTamanho: " + tamanho + "m";
 	}
 
-	public void calculoDias() {
-		LocalDate dataInicial = LocalDate.of(12, 12, 2022);
-		LocalDate dataFinal = LocalDate.of(20, 12, 2022);
-		long days = ChronoUnit.DAYS.between(dataInicial, dataFinal);
-	}
+
 
 }
